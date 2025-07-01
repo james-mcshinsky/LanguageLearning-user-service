@@ -14,7 +14,7 @@ This project stores short video transcripts and provides simple scripts to inges
    ```
    This creates `data/content.db` with the transcripts and their readability scores.
 
-## Recommend content
+## Recommend by level
 
 Run `recommend.py` with the user's current level:
 
@@ -23,3 +23,29 @@ python scripts/recommend.py --level 2
 ```
 
 The script outputs the transcript whose grade level is nearest to `level + 1`.
+
+## Track known words
+
+Use `manage_words.py` to store the words a learner already knows. This creates
+`data/user_words.db` if it does not exist.
+
+Add words:
+
+```bash
+python scripts/manage_words.py add hello world
+```
+
+List stored words:
+
+```bash
+python scripts/manage_words.py list
+```
+
+## Recommend by known words
+
+Run `recommend_known.py` to select the transcript that contains the highest
+proportion of words already stored in `user_words.db`:
+
+```bash
+python scripts/recommend_known.py
+```
