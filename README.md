@@ -49,3 +49,13 @@ proportion of words already stored in `user_words.db`:
 ```bash
 python scripts/recommend_known.py
 ```
+
+## Web interface
+
+A simple Flask app exposes the scripts through a browser. Start it with:
+
+```bash
+python webapp/app.py
+```
+
+The homepage lets you ingest transcripts, add known words, and get video recommendations using either your level or stored words.

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">Find the next video</h2>
+<form method="post" action="{{ url_for('recommend_route') }}" class="row g-3 mb-4">
+  <div class="col-auto">
+    <input type="number" step="0.1" name="level" class="form-control" placeholder="Your level">
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary mb-3">Recommend by Level</button>
+  </div>
+</form>
+<form method="post" action="{{ url_for('recommend_known_route') }}" class="mb-4">
+  <button type="submit" class="btn btn-success">Recommend by Known Words</button>
+</form>
+{% if recommendation %}
+<div class="card mb-4">
+  <div class="card-body">
+    <h5 class="card-title">{{ recommendation.title }}</h5>
+    {% if recommendation.grade_level is not none %}
+    <p class="card-text"><strong>Grade level:</strong> {{ recommendation.grade_level|round(2) }}</p>
+    {% endif %}
+    {% if recommendation.score is not none %}
+    <p class="card-text"><strong>Known word coverage:</strong> {{ (recommendation.score*100)|round(1) }}%</p>
+    {% endif %}
+    <pre>{{ recommendation.transcript }}</pre>
+  </div>
+</div>
+{% endif %}
+<h2 class="mb-3">Add known words</h2>
+<form method="post" action="{{ url_for('add_words_route') }}" class="row g-3 mb-4">
+  <div class="col-auto">
+    <input type="text" name="words" class="form-control" placeholder="words separated by space">
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-secondary mb-3">Add Words</button>
+  </div>
+</form>
+{% if known_words %}
+<h4>Your known words:</h4>
+<ul>
+  {% for w in known_words %}
+  <li>{{ w }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+<form method="post" action="{{ url_for('ingest_route') }}" class="mt-4">
+  <button class="btn btn-outline-primary">Ingest transcripts</button>
+</form>
+{% endblock %}
