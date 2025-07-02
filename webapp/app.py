@@ -4,10 +4,10 @@ from pathlib import Path
 import sqlite3
 from flask import Flask, render_template, request, redirect, url_for
 
-from scripts.ingest import create_table as create_content_table, ingest_transcripts
-from scripts.recommend import get_recommendation
-from scripts.recommend_known import best_match, load_known_words
-from scripts.manage_words import create_table as create_user_table, add_words
+from langdb.ingest import create_table as create_content_table, ingest_transcripts
+from langdb.recommend import get_recommendation
+from langdb.recommend_known import best_match, load_known_words
+from langdb.manage_words import create_table as create_user_table, add_words
 
 CONTENT_DB = Path("data/content.db")
 USER_DB = Path("data/user_words.db")

@@ -10,7 +10,7 @@ This project stores short video transcripts and provides simple scripts to inges
    ```
 2. Ingest transcripts from the `transcripts/` folder:
    ```bash
-   python scripts/ingest.py
+   python -m langdb.ingest
    ```
    This creates `data/content.db` with the transcripts and their readability scores.
 
@@ -19,7 +19,7 @@ This project stores short video transcripts and provides simple scripts to inges
 Run `recommend.py` with the user's current level:
 
 ```bash
-python scripts/recommend.py --level 2
+python -m langdb.recommend --level 2
 ```
 
 The script outputs the transcript whose grade level is nearest to `level + 1`.
@@ -32,13 +32,13 @@ Use `manage_words.py` to store the words a learner already knows. This creates
 Add words:
 
 ```bash
-python scripts/manage_words.py add hello world
+python -m langdb.manage_words add hello world
 ```
 
 List stored words:
 
 ```bash
-python scripts/manage_words.py list
+python -m langdb.manage_words list
 ```
 
 ## Recommend by known words
@@ -47,7 +47,7 @@ Run `recommend_known.py` to select the transcript that contains the highest
 proportion of words already stored in `user_words.db`:
 
 ```bash
-python scripts/recommend_known.py
+python -m langdb.recommend_known
 ```
 
 ## Web interface

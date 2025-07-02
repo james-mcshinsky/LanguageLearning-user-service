@@ -47,7 +47,9 @@ def main() -> None:
     ) as conn_user:
         known_words = load_known_words(conn_user)
         if not known_words:
-            print("No known words stored. Add words using scripts/manage_words.py.")
+            print(
+                "No known words stored. Add words using 'python -m langdb.manage_words'."
+            )
             return
         match = best_match(conn_content, known_words)
 
