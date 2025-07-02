@@ -1,0 +1,34 @@
+/* Custom styles inspired by YouTube */
+body {
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+}
+
+.navbar-youtube {
+    background-color: #212121;
+}
+
+.navbar-youtube .navbar-brand {
+    color: #fff;
+    font-weight: bold;
+}
+
+.navbar-youtube .form-control {
+    background-color: #121212;
+    border-color: #303030;
+    color: #fff;
+}
+
+.navbar-youtube .form-control::placeholder {
+    color: #bbb;
+}
+
+.content-container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
