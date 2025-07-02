@@ -59,3 +59,11 @@ python webapp/app.py
 ```
 
 The homepage lets you ingest transcripts, add known words, and get video recommendations using either your level or stored words.
+
+## Hosting on GitHub Pages
+
+To make the static site in `docs/` available online:
+1. Push this repository to GitHub.
+2. Open the repository **Settings** on GitHub and choose **Pages** from the side bar.
+3. Under **Source** select **Deploy from a branch**, then pick the `main` branch and the `/docs` folder.
+4. Save the changes. After a minute GitHub will publish the site at `https://<your-username>.github.io/<repository>`.
