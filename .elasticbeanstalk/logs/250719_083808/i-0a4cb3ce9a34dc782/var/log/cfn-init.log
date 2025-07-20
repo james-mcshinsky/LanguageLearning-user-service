@@ -1,0 +1,29 @@
+2025-07-19 02:06:53,437 [INFO] -----------------------Starting build-----------------------
+2025-07-19 02:06:53,443 [INFO] Running configSets: _OnInstanceBoot
+2025-07-19 02:06:53,446 [INFO] Running configSet _OnInstanceBoot
+2025-07-19 02:06:53,449 [INFO] Running config AWSEBBaseConfig
+2025-07-19 02:06:53,706 [INFO] Command clearbackupfiles succeeded
+2025-07-19 02:06:53,709 [INFO] Running config AWSEBCfnHupEndpointOverride
+2025-07-19 02:06:53,714 [INFO] Command clearbackupfiles succeeded
+2025-07-19 02:06:53,715 [INFO] ConfigSets completed
+2025-07-19 02:06:53,716 [INFO] -----------------------Build complete-----------------------
+2025-07-19 02:08:00,078 [INFO] -----------------------Starting build-----------------------
+2025-07-19 02:08:00,090 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2025-07-19 02:08:00,094 [INFO] Running configSet Infra-EmbeddedPreBuild
+2025-07-19 02:08:00,094 [INFO] ConfigSets completed
+2025-07-19 02:08:00,094 [INFO] -----------------------Build complete-----------------------
+2025-07-19 02:09:27,875 [INFO] -----------------------Starting build-----------------------
+2025-07-19 02:09:27,882 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2025-07-19 02:09:27,885 [INFO] Running configSet Infra-EmbeddedPreBuild
+2025-07-19 02:09:27,886 [INFO] ConfigSets completed
+2025-07-19 02:09:27,886 [INFO] -----------------------Build complete-----------------------
+2025-07-19 04:01:49,787 [INFO] -----------------------Starting build-----------------------
+2025-07-19 04:01:49,792 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2025-07-19 04:01:49,795 [INFO] Running configSet Infra-EmbeddedPreBuild
+2025-07-19 04:01:49,795 [INFO] ConfigSets completed
+2025-07-19 04:01:49,795 [INFO] -----------------------Build complete-----------------------
+2025-07-19 14:34:12,376 [INFO] -----------------------Starting build-----------------------
+2025-07-19 14:34:12,383 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2025-07-19 14:34:12,386 [INFO] Running configSet Infra-EmbeddedPreBuild
+2025-07-19 14:34:12,386 [INFO] ConfigSets completed
+2025-07-19 14:34:12,386 [INFO] -----------------------Build complete-----------------------

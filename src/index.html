@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Language Learning Platform</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+  <div id="root"></div>
+  <!-- Set API_BASE to your backend. Use http://127.0.0.1:8000 locally or the
+       Elastic Beanstalk/ECS URL in production. -->
+  <script>
+    window.API_BASE = 'https://language-learning-env.eba-zic5jcqz.us-west-2.elasticbeanstalk.com';
+  </script>
+    <script type="module" src="/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,114 @@
+name: Deploy to Elastic Beanstalk
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      # Combine SHA with run id and attempt to make the label unique even on re-runs
+      VERSION_LABEL: app-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ steps.login-ecr.outputs.registry }}/language-learning-backend:latest .
+
+      - name: Push image to Amazon ECR
+        run: |
+          docker push ${{ steps.login-ecr.outputs.registry }}/language-learning-backend:latest
+
+      - name: Update Dockerrun file
+        run: |
+          set -e
+          jq --arg uri "${{ steps.login-ecr.outputs.registry }}/language-learning-backend:latest" '.Image.Name = $uri' Dockerrun.aws.json > Dockerrun.tmp
+          mv Dockerrun.tmp Dockerrun.aws.json
+      - name: Validate Dockerrun.aws.json
+        run: jq . Dockerrun.aws.json
+      - name: Package Dockerrun
+        run: zip ${{ env.VERSION_LABEL }}.zip Dockerrun.aws.json
+
+      - name: Upload source bundle to S3
+        run: |
+          set -e
+          aws s3 cp ${{ env.VERSION_LABEL }}.zip s3://${{ secrets.EB_BUCKET }}/${{ env.VERSION_LABEL }}.zip
+          aws s3 ls s3://${{ secrets.EB_BUCKET }}/${{ env.VERSION_LABEL }}.zip
+
+      - name: Create application version
+        run: |
+          set -e
+          aws elasticbeanstalk create-application-version \
+            --application-name language-learning-backend \
+            --version-label ${{ env.VERSION_LABEL }} \
+            --source-bundle S3Bucket=${{ secrets.EB_BUCKET }},S3Key=${{ env.VERSION_LABEL }}.zip \
+            --region ${{ secrets.AWS_REGION }}
+
+      - name: Verify application version exists
+        run: |
+          set -e
+          aws elasticbeanstalk describe-application-versions \
+            --application-name language-learning-backend \
+            --version-label ${{ env.VERSION_LABEL }} \
+            --region ${{ secrets.AWS_REGION }}
+
+      - name: Wait for EB registration
+        run: |
+          set -e
+          for i in {1..30}; do
+            STATUS=$(aws elasticbeanstalk describe-application-versions \
+              --application-name language-learning-backend \
+              --version-label ${{ env.VERSION_LABEL }} \
+              --region ${{ secrets.AWS_REGION }} \
+              --query 'ApplicationVersions[0].Status' \
+              --output text)
+            if [[ "$STATUS" == "Processed" ]]; then
+              echo "Application version is ready."
+              break
+            fi
+            echo "Waiting for Elastic Beanstalk to process the new application version (current status: $STATUS)..."
+            sleep 5
+          done
+
+      - name: Fail if application version not found
+        run: |
+          set -e
+          STATUS=$(aws elasticbeanstalk describe-application-versions \
+            --application-name language-learning-backend \
+            --version-label ${{ env.VERSION_LABEL }} \
+            --region ${{ secrets.AWS_REGION }} \
+            --query 'ApplicationVersions[0].Status' \
+            --output text)
+          if [[ "$STATUS" != "Processed" ]]; then
+            echo "ERROR: Application version is not ready (status: $STATUS)."
+            exit 1
+          fi
+
+      - name: Show recent EB events
+        run: |
+          aws elasticbeanstalk describe-events \
+            --application-name language-learning-backend \
+            --environment-name ${{ secrets.EB_ENV_NAME }} \
+            --max-items 10 \
+            --region ${{ secrets.AWS_REGION }}
+
+      - name: Deploy to Elastic Beanstalk
+        run: |
+          set -e
+          pip install --upgrade awsebcli
+          eb init language-learning-backend --platform "Docker" -r ${{ secrets.AWS_REGION }}
+          eb deploy ${{ secrets.EB_ENV_NAME }} --label ${{ env.VERSION_LABEL }}

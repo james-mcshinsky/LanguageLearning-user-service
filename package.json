@@ -1,0 +1,32 @@
+{
+  "name": "languagelearning-website",
+  "version": "1.0.0",
+  "description": "Language learning platform prototype",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "jest",
+    "lint": "eslint src"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^16.3.0",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@typescript-eslint/eslint-plugin": "^8.36.0",
+    "@typescript-eslint/parser": "^8.36.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^9.31.0",
+    "jest": "^30.0.4",
+    "jest-environment-jsdom": "^30.0.4",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.4.5",
+    "vite": "^7.0.4"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}

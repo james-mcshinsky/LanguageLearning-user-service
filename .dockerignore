@@ -1,0 +1,10 @@
+__pycache__/
+*.db
+*.pyc
+*.pyo
+*.pyd
+*.pytest_cache/
+node_modules/
+.git
+build/
+dist/
