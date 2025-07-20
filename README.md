@@ -67,3 +67,32 @@ To make the static site in `docs/` available online:
 2. Open the repository **Settings** on GitHub and choose **Pages** from the side bar.
 3. Under **Source** select **Deploy from a branch**, then pick the `main` branch and the `/docs` folder.
 4. Save the changes. After a minute GitHub will publish the site at `https://<your-username>.github.io/<repository>`.
+
+## FastAPI backend
+
+1. Install the backend dependencies:
+   ```bash
+   pip install -r backend/requirements.txt
+   ```
+2. Start the API server:
+   ```bash
+   uvicorn backend.main:app --reload
+   ```
+
+## React frontend
+
+1. Install Node.js dependencies:
+   ```bash
+   npm install
+   ```
+2. Run in development mode:
+   ```bash
+   npm run dev
+   ```
+   Or build for production:
+   ```bash
+   npm run build
+   ```
+
+Before starting the frontend, edit `src/index.html` and set `window.API_BASE` to the URL of your backend. Use `http://127.0.0.1:8000` while developing locally or your deployed API endpoint in production.
+
